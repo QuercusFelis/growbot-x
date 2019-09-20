@@ -2,7 +2,7 @@ import sys
 import Adafruit_DHT
 
 sensor = Adafruit_DHT.AM2302
-pin = 4
+pin = 2 
 
 humidity, temp = Adafruit_DHT.read_retry(sensor, pin) #read temp
 
