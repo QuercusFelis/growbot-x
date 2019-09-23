@@ -1,18 +1,20 @@
 from mastodon import Mastodon
+import sys
 
-Mastodon.create_app(
-    'growbot-x',
-    api_base_url = 'https://wetfish.space',
-    to_file = 'growbot_client.secret'
-)
+apiURL = 'https://wetfish.space'
+clientSecret = 'growbot_client.secret'
+userSecret = 'growbot_user.secret'
 
 user = Mastodon(
-    access_token = 'growbot_client.secret',
-    api_base_url = 'https://wetfish.space'
+    client_id = clientSecret,
+    access_token = userSecret,
+    api_base_url = apiURL
 )
 
-user.log_in(
-    to_file = 'growbot_client.secret'
-)
+if len(sys.argv) < 3 :
+    user.toot(sys.stdin.read())
+#if len(sys.argv) == 2:
 
-user.toot('This is a test of the growbox-x alert subsystem (that\'s fancy speak for pleroma bot)')
+#if len(sys.argv) == 3:
+else:
+    print('growbotx: INVALID ARGUMENT FORMAT')
