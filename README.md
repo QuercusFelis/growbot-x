@@ -21,6 +21,7 @@ The soil moisture sensors can be connected almost just like the temp/humidity se
 ### Software Dependecies:
 - Python 3
 - Adafruit_DHT (install using 'sudo pip3 install Adafruit_DHT', requires pip)
+- spidev-py (install using 'sudo pip3 install spidev, requires pip)
 
 ## Getting Started:
 First install Python 3 & Adafruit_DHT. Next, edit growbot.conf. Finally, if you are federating your bot, run 'python3 generateSecrets.py' and follow the instructions there.
