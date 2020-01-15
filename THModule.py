@@ -29,7 +29,7 @@ humidity, temp = Adafruit_DHT.read_retry(sensor, pin) #read temp
 if humidity is not None and temp is not None:
     temp = temp * 9/5.0 + 32 #convert celcius to fahrenheit
     print('temp: {0:0.1f}f  humidity: {1:0.1f}%'.format(temp, humidity))
-    sys.exit(0)
+    exit(0)
 else:
     sys.stderr.write('growbot-x: Failed to obtain temperature & humidity reading\n')
-    sys.exit(2)
+    exit(2)

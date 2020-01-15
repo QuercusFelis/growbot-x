@@ -17,6 +17,7 @@ user = Mastodon(
 
 if len(sys.argv) < 3 :
     user.toot(sys.stdin.read())
+    exit(0)
 #if len(sys.argv) == 2:
 
 #if len(sys.argv) == 3:
