@@ -1,7 +1,11 @@
 from mastodon import Mastodon
+import configparser
 import sys
 
-apiURL = 'https://wetfish.space'
+confParser = configparser.RawConfigParser()
+confParser.read(r'growbot.conf')
+
+apiURL = confParser.get('growbot-conf', 'apiURL')
 clientSecret = 'growbot_client.secret'
 userSecret = 'growbot_user.secret'
 
@@ -17,4 +21,5 @@ if len(sys.argv) < 3 :
 
 #if len(sys.argv) == 3:
 else:
-    print('growbotx: INVALID ARGUMENT FORMAT')
+    sys.stderr.write('growbot-x: INVALID ARGUMENT FORMAT FOR MASTOPOST')
+    exit(1)
