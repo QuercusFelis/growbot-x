@@ -8,21 +8,15 @@ confParser.read(r'growbot.conf')
 sensorModel = confParser.get('growbot-conf', 'temp_humidity_sensor')
 pin = confParser.getint('growbot-conf', 'temp_humidity_pin')
 sensor = None
-switch(sensorModel)
-{
-    case 'AM2302': 
+if sensorModel == 'AM2302': 
         sensor = Adafruit_DHT.AM2302
-        break;
-    case 'DHT22':
+elif sensorModel == 'DHT22':
         sensor = Adafruit_DHT.DHT22
-        break;
-    case 'DHT11':
+elif sensorModel == 'DHT11':
         sensor = Adafruit_DHT.DHT11
-        break;
-    default:
-        sys.stderr.write('growbot-x: INVALID SENSOR TYPE IN CONFIG - i.e. AM2303, DHT22, DHT11')
+else:
+        sys.stderr.write('growbot-x: INVALID SENSOR TYPE IN CONFIG - i.e. AM2303, DHT22, DHT11' + sensorModel)
         exit(1)
-}
 
 humidity, temp = Adafruit_DHT.read_retry(sensor, pin) #read temp
 
