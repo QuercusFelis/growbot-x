@@ -1,6 +1,10 @@
 from mastodon import Mastodon
+import configparser
 
-apiURL = input('Please type the full URL of your instance: ')
+confParser = configparser.RawConfigParser()
+confParser.read(r'growbot.conf')
+
+apiURL = confParser.get('growbot-conf', 'apiURL')
 username = input('Username: ')
 password = input('Password: ')
 clientSecret = 'growbot_client.secret'
@@ -23,4 +27,4 @@ user.log_in(
     to_file = userSecret
 )
 
-user.toot('This is a test of the growbox-x alert subsystem (that\'s fancy speak for pleroma bot)')
+user.toot('Beep Boop. Your bot is ready :D')
