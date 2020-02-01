@@ -3,38 +3,43 @@ import configparser
 import argparse
 import sys
 
-import SoilMoisture.py
-import THModule.py
+from THModule import *
+from SoilModule import *
 
 confParser = configparser.RawConfigParser()
-confParser.read(r'growbot.conf')
+confParser.read(r'conf.secret')
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-s','--soil',help='read soil moisture',action='store_true')
 parser.add_argument('-a','--atmosphere',help='read temperature & humidity',action='store_true')
 parser.add_argument('-A','--All',help='read all sensors',action='store_true')
-args = arser.parse_args()
-
-stdin = sys.stdin.read()
+args = parser.parse_args()
 
 apiURL = confParser.get('growbot-conf', 'apiURL')
 clientSecret = 'growbot_client.secret'
 userSecret = 'growbot_user.secret'
+username = confParser.get('growbot-conf', 'username')
+password = confParser.get('growbot-conf', 'password')
 user = Mastodon(
     client_id = clientSecret,
-    access_token = userSecret,
     api_base_url = apiURL
+)
+user.log_in(username, password, to_file=userSecret)
+user = Mastodon(
+        access_token = userSecret,
+        api_base_url = apiURL
 )
 
 outstr = ''
-if String.len(stdin) != 0 :
-    outstr += sys.stdin.read() + '\n\n'
-if args.All||args.atmosphere:
-    outstr += THModule.readTHModule()
-if args.All||args.soil:
-    outstr += SoilMoisture.readSoilMoisture()
+#if String.len() != 0 :
+#    print('['+outstr+']')
+#    outstr += sys.stdin.read() + '\n\n'
+if args.All or args.atmosphere:
+    outstr += readTHModule()
+if args.All or args.soil:
+    outstr += readSoilMoisture()
 else:
-    sys.stderr.write('growbot-x: INVALID ARGUMENT FORMAT FOR MASTOPOST')
+    sys.stderr.write('growbot-x: INVALID ARGUMENT FORMAT FOR MASTOPOST\n')
     exit(1)
-user.toot(outstr)
+user.status_post(outstr)
 exit(0)
