@@ -28,4 +28,6 @@ The soil moisture sensors can be connected almost just like the temp/humidity se
 First install Python3, pip3, & depedencies ('sudo pip3 install Adafruit_DHT spidev Mastodon.py'). Make an account on any ActivityPub server which supports the MastodonAPI, (i.e. Pleroma, Mastodon, etc.) Next, edit growbot.conf by filling in the URL for the instance you chose as well as details about your hardware. Finally, if you are federating your bot, run 'python3 generateSecrets.py' and follow the instructions there.
 
 ## Usage:
-To use, any script may be run individually i.e. 'python3 THModule.py', or if you are federating you can pass this output through stdin to mastoPost.py simply by doing 'python3 THModule.py | python3 mastoPost.py'. Automation of the scripts is as simple as setting up a cronjob.
+To post all sensor readings, use 'python3 mastoPost.py -A', for more options, read 'python3 mastoPost.py -h'
+Additionally, any script may be run individually i.e. 'python3 THModule.py'. These outputs can be piped into mastoPost.py like so 'python3 THModule.py | python3 mastoPost.py'.
+Automation of the scripts is as simple as setting up a cronjob.
