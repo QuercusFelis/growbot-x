@@ -18,7 +18,7 @@ def readSoilMoisture():
         reading = spi.xfer2([0x1, (0x8+i) << 4, 0x0])
         value = (reading[1]%4 << 8)+reading[2]-445
         percent = 100*(445-value)/445
-        outStr += '{0}: {1:.2f}% '.format(i,percent)
+        outStr += '{0}: {1:.2f}% \n'.format(i,percent)
     return outStr
 
 print(readSoilMoisture())
