@@ -1,6 +1,8 @@
 [growbot-conf]
 #root url of instance
 apiURL = https://wetfish.space
+username = 
+password = 
 #AM2302, DHT22, DHT11 are acceptable values here
 temp_humidity_sensor = AM2302
 #pins are 0 indexed

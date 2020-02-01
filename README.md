@@ -28,7 +28,10 @@ The soil moisture sensors can be connected almost just like the temp/humidity se
 - Mastodon.py (install using 'sudo pip3 install Mastodon.py, requires pip)
 
 ## Getting Started:
-After installing and setting up Raspbian on you pi (including network configuration and __enabling SPI__), __install Python3, pip3, & other depedencies__ ('sudo pip3 install Adafruit_DHT spidev Mastodon.py'). __Make an account__ on any ActivityPub server which supports the MastodonAPI, (i.e. Pleroma, Mastodon, etc.) Next, __edit growbot.conf__ by filling in the URL for the instance you chose as well as details about your hardware. Finally, if you are federating your bot, __run 'python3 generateSecrets.py'__ and follow the instructions there.
+After installing and setting up Raspbian on you pi (including network configuration and __enabling SPI__), __install Python3, pip3, & depedencies__ ('sudo pip3 install Adafruit_DHT spidev Mastodon.py'). __Make an account__ on any ActivityPub server which supports the MastodonAPI, (i.e. Pleroma, Mastodon, etc.) Next, __copy conf.example (the example config) to conf.secret__ and then __edit conf.secret__ by filling in the URL for the instance you chose as well as details about your hardware. Finally, simply __run 'python3 generateSecrets.py'__.
+
 
 ## Usage:
-To use, any script may be run individually i.e. 'python3 THModule.py', or if you are federating you can pass this output through stdin to mastoPost.py simply by doing 'python3 THModule.py | python3 mastoPost.py'. Automation of the scripts is as simple as setting up a cronjob.
+To post all sensor readings, use 'python3 mastoPost.py -A', for more options, read 'python3 mastoPost.py -h'
+Additionally, any script may be run individually i.e. 'python3 THModule.py'. These outputs can be piped into mastoPost.py like so 'python3 THModule.py | python3 mastoPost.py'.
+Automation of the scripts is as simple as setting up a cronjob.
