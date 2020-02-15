@@ -4,7 +4,7 @@ import spidev
 
 def readSoilMoisture():
     confParser = configparser.RawConfigParser()
-    confParser.read(r'growbot.conf')
+    confParser.read(r'conf.secret')
 
     numChannels = confParser.getint('growbot-conf', 'mcp3008_channels')
 
@@ -19,7 +19,4 @@ def readSoilMoisture():
         value = (reading[1]%4 << 8)+reading[2]-445
         percent = 100*(445-value)/445
         outStr += '{0}: {1:.2f}% \n'.format(i,percent)
-    return outStr
-
-print(readSoilMoisture())
-exit(0)
+    return outStr;

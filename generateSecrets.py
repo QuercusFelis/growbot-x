@@ -2,11 +2,11 @@ from mastodon import Mastodon
 import configparser
 
 confParser = configparser.RawConfigParser()
-confParser.read(r'growbot.conf')
+confParser.read(r'conf.secret')
 
 apiURL = confParser.get('growbot-conf', 'apiURL')
-username = input('Username: ')
-password = input('Password: ')
+username = confParser.get('growbot-conf', 'username')
+password = confParser.get('growbot-conf', 'password')
 clientSecret = 'growbot_client.secret'
 userSecret = 'growbot_user.secret'
 
@@ -28,3 +28,5 @@ user.log_in(
 )
 
 user.toot('Beep Boop. Your bot is ready :D')
+print('Beep Boop. Your bot is ready :D')
+exit(0)

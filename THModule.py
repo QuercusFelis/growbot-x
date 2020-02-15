@@ -2,9 +2,9 @@ import sys
 import Adafruit_DHT
 import configparser
 
-def readTHModule()
+def readTHModule():
     confParser = configparser.RawConfigParser()
-    confParser.read(r'growbot.conf')
+    confParser.read(r'conf.secret')
 
     sensorModel = confParser.get('growbot-conf', 'temp_humidity_sensor')
     pin = confParser.getint('growbot-conf', 'temp_humidity_pin')
@@ -28,5 +28,3 @@ def readTHModule()
         sys.stderr.write('growbot-x: Failed to obtain temperature & humidity reading\n')
         exit(2)
 
-print(readTHModule())
-exit(0)
