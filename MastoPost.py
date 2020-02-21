@@ -6,6 +6,7 @@ import sys
 import SoilMoisture.py
 import THModule.py
 import CameraModule.py
+import Logger.py
 
 confParser = configparser.RawConfigParser()
 confParser.read(r'conf.secret')
@@ -33,13 +34,15 @@ user = Mastodon(
 )
 
 outstr = ''
-#if String.len() != 0 :
-#    print('['+outstr+']')
-#    outstr += sys.stdin.read() + '\n\n'
 if args.All or args.atmosphere:
-    outstr += readTHModule()
+    thmod = readTHModule()
+    outstr += 'Temp: '+thmod[0]+'f'
+    outstr += '  '
+    outstr += 'Humidity: '+thmod[1]+'\n\n'
 if args.All or args.soil:
-    outstr += readSoilMoisture()
+    smmod = readSoilMoisture()
+    for i in range(len(smmod)-1):
+        outstr += '['+i+'] '+smmod[i]+'\n'
 if args.All or args.camera:
     user.status_post(
         outstr, 
