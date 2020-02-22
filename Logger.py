@@ -58,4 +58,4 @@ parser.add_argument('-A','--All',help='log all sensors',action='store_true')
 parsedargs = parser.parse_args()
 
 log(parsedargs)
-plot(0,1,0,20)
+#plot(0,1,0,20)
