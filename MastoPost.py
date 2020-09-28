@@ -3,21 +3,23 @@ import configparser
 import argparse
 import sys
 
-import SoilMoisture.py
-import THModule.py
-import CameraModule.py
-import Logger.py
+from SoilModule import *
+from THModule import *
+from CameraModule import *
+from Logger import *
 
 confParser = configparser.RawConfigParser()
 confParser.read(r'conf.secret')
 
+# Read in arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('-s','--soil',help='read soil moisture',action='store_true')
 parser.add_argument('-a','--atmosphere',help='read temperature & humidity',action='store_true')
 parser.add_argument('-c','--camera',help='take a photo',action='store_true')
 parser.add_argument('-A','--All',help='poll camera and all sensors',action='store_true')
-args = arser.parse_args()
+args = parser.parse_args()
 
+# Login
 apiURL = confParser.get('growbot-conf', 'apiURL')
 clientSecret = 'growbot_client.secret'
 userSecret = 'growbot_user.secret'
@@ -33,6 +35,7 @@ user = Mastodon(
         api_base_url = apiURL
 )
 
+# Format data and post it
 outstr = ''
 if args.All or args.atmosphere:
     thmod = readTHModule()

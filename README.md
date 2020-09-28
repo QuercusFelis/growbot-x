@@ -26,9 +26,10 @@ The soil moisture sensors can be connected almost just like the temp/humidity se
 - Adafruit_DHT (install using 'sudo pip3 install Adafruit_DHT', requires pip)
 - Spidev-py (install using 'sudo pip3 install spidev, requires pip)
 - Mastodon.py (install using 'sudo pip3 install Mastodon.py, requires pip)
+- RPi.GPIO (install using 'sudo pip3 install RPi.GPIO, requires pip)
 
 ## Getting Started:
-After installing and setting up Raspbian on you pi (including network configuration and __enabling SPI__), __install Python3, pip3, & depedencies__ ('sudo pip3 install Adafruit_DHT spidev Mastodon.py'). __Make an account__ on any ActivityPub server which supports the MastodonAPI, (i.e. Pleroma, Mastodon, etc.) Next, __copy conf.example (the example config) to conf.secret__ and then __edit conf.secret__ by filling in the URL for the instance you chose as well as details about your hardware. Finally, simply __run 'python3 generateSecrets.py'__.
+After installing and setting up Raspbian on you pi (including network configuration and __enabling SPI__), __install Python3, pip3, & depedencies__ ('sudo pip3 install Adafruit_DHT spidev Mastodon.py RPi.GPIO'). __Make an account__ on any ActivityPub server which supports the MastodonAPI, (i.e. Pleroma, Mastodon, etc.) Next, __copy conf.example (the example config) to conf.secret__ and then __edit conf.secret__ by filling in the URL for the instance you chose as well as details about your hardware. Finally, simply __run 'python3 generateSecrets.py'__.
 
 
 ## Usage:

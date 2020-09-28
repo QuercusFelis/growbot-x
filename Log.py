@@ -10,12 +10,14 @@ import THModule.py
 confParser = configparser.RawConfigParser()
 confParser.read(r'conf.secret')
 
+# Parse Arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('-s','--soil',help='log soil moisture',action='store_true')
 parser.add_argument('-a','--atmosphere',help='log temperature & humidity',action='store_true')
 parser.add_argument('-A','--All',help='log all sensors',action='store_true')
 parsedargs = arser.parse_args()
 
+# Append logs when called directly
 log(parsedargs)
 
 def log(args):
@@ -34,8 +36,9 @@ def log(args):
 
         fwriter.writerow(row)
 
+# Creates a plot when called
 def plot(col1, col2, start=0, end=0):
-    cols = ['Time','Temperature','Humidity','Channel {} SoilMoisture'.format(col2-2)]
+    cols = ['Time','Temperature','Humidity','Chan {} Moisture'.format(col2-2)]
     x=[]
     y=[]
 
