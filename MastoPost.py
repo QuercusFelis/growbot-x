@@ -3,10 +3,10 @@ import configparser
 import argparse
 import sys
 
-from SoilModule import *
-from THModule import *
-from CameraModule import *
-from Logger import *
+import SoilModule
+import THModule
+from CameraModule import photo
+#import Logger
 
 confParser = configparser.RawConfigParser()
 confParser.read(r'conf.secret')
