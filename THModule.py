@@ -23,7 +23,7 @@ def readTHModule():
 
     if humidity is not None and temp is not None:
         temp = temp * 9/5.0 + 32 #convert celcius to fahrenheit
-        return('temp: {0:0.1f}f  humidity: {1:0.1f}%'.format(temp, humidity)+'\n\n')
+        return(['{0:0.1f}'.format(temp),'{0:0.1f}%'.format(humidity)])
     else:
         sys.stderr.write('growbot-x: Failed to obtain temperature & humidity reading\n')
         exit(2)

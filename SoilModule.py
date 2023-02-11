@@ -7,16 +7,23 @@ def readSoilMoisture():
     confParser.read(r'conf.secret')
 
     numChannels = confParser.getint('growbot-conf', 'mcp3008_channels')
+    raw = confParser.getboolean('growbot-conf', 'soil_moisture_raw_output')
+    offset = confParser.getint('growbot-conf', 'soil_moisture_offset')
+    scale = confParser.getfloat('growbot-conf', 'soil_moisture_scale_factor')
 
     spi = spidev.SpiDev()
     spi.open(0,0)
     spi.max_speed_hz = confParser.getint('growbot-conf', 'spi_freq')
 
-    outStr = ''
+    outputs = []
     for i in range (numChannels):
-        chan = i+0x18 #first digit is start bit, second tells a/d to use non-differential mode i.e. 0b00011XXX
-        reading = spi.xfer2([0x1, (0x8+i) << 4, 0x0])
-        value = (reading[1]%4 << 8)+reading[2]-445
-        percent = 100*(445-value)/445
-        outStr += '{0}: {1:.2f}% \n'.format(i,percent)
-    return outStr;
+        # First bit is start bit, Second bit indicates non-differential mode, Last 3 are pin select (i)
+        reading = spi.xfer2([0x1, (0x8+i) << 4, 0x0]) # Raw binary output from MCP3008
+        value = (reading[1]%4 << 8) + reading[2] # Convert to a raw decimal value (0-1023)
+        value = (value - offset) * scale # Correct value
+        if raw:
+            outputs.append(value)
+        else:
+            percent = 100*(value/1023) # Convert to a percentage (0-100)
+            outputs.append('{1:.2f}%'.format(percent))
+    return outputs

@@ -3,18 +3,23 @@ import configparser
 import argparse
 import sys
 
-from THModule import *
-from SoilModule import *
+import SoilModule
+import THModule
+from CameraModule import photo
+#import Logger
 
 confParser = configparser.RawConfigParser()
 confParser.read(r'conf.secret')
 
+# Read in arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('-s','--soil',help='read soil moisture',action='store_true')
 parser.add_argument('-a','--atmosphere',help='read temperature & humidity',action='store_true')
-parser.add_argument('-A','--All',help='read all sensors',action='store_true')
+parser.add_argument('-c','--camera',help='take a photo',action='store_true')
+parser.add_argument('-A','--All',help='poll camera and all sensors',action='store_true')
 args = parser.parse_args()
 
+# Login
 apiURL = confParser.get('growbot-conf', 'apiURL')
 clientSecret = 'growbot_client.secret'
 userSecret = 'growbot_user.secret'
@@ -30,14 +35,22 @@ user = Mastodon(
         api_base_url = apiURL
 )
 
+# Format data and post it
 outstr = ''
-#if String.len() != 0 :
-#    print('['+outstr+']')
-#    outstr += sys.stdin.read() + '\n\n'
 if args.All or args.atmosphere:
-    outstr += readTHModule()
+    thmod = readTHModule()
+    outstr += 'Temp: '+thmod[0]+'f'
+    outstr += '  '
+    outstr += 'Humidity: '+thmod[1]+'\n\n'
 if args.All or args.soil:
-    outstr += readSoilMoisture()
+    smmod = readSoilMoisture()
+    for i in range(len(smmod)-1):
+        outstr += '['+i+'] '+smmod[i]+'\n'
+if args.All or args.camera:
+    user.status_post(
+        outstr, 
+        media_ids=user.media_post(photo()))
+    exit(0)
 else:
     sys.stderr.write('growbot-x: INVALID ARGUMENT FORMAT FOR MASTOPOST\n')
     exit(1)
