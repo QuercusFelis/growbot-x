@@ -1,4 +1,4 @@
 *.secret
 __pycache__
-./images/*
+images/
 *.csv

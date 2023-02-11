@@ -1,10 +1,12 @@
 import sys
 import Adafruit_DHT
 import configparser
+import os
 
 def readTHModule():
+    confFile = os.path.join(os.path.dirname(__file__), 'conf.secret')
     confParser = configparser.RawConfigParser()
-    confParser.read(r'conf.secret')
+    confParser.read(confFile)
 
     sensorModel = confParser.get('growbot-conf', 'temp_humidity_sensor')
     pin = confParser.getint('growbot-conf', 'temp_humidity_pin')

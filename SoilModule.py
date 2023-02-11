@@ -1,10 +1,12 @@
 import sys
 import configparser
 import spidev
+import os
 
 def readSoilMoisture():
+    confFile = os.path.join(os.path.dirname(__file__), 'conf.secret')
     confParser = configparser.RawConfigParser()
-    confParser.read(r'conf.secret')
+    confParser.read(confFile)
 
     numChannels = confParser.getint('growbot-conf', 'mcp3008_channels')
     raw = confParser.getboolean('growbot-conf', 'soil_moisture_raw_output')

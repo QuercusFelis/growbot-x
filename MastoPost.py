@@ -2,14 +2,16 @@ from mastodon import Mastodon
 import configparser
 import argparse
 import sys
+import os
 
-import SoilModule
-import THModule
+import SoilModule as soilmodule
+from THModule import readTHModule
 from CameraModule import photo
 #import Logger
 
+confFile = os.path.join(os.path.dirname(__file__), 'conf.secret')
 confParser = configparser.RawConfigParser()
-confParser.read(r'conf.secret')
+confParser.read(confFile)
 
 # Read in arguments
 parser = argparse.ArgumentParser()
@@ -21,8 +23,8 @@ args = parser.parse_args()
 
 # Login
 apiURL = confParser.get('growbot-conf', 'apiURL')
-clientSecret = 'growbot_client.secret'
-userSecret = 'growbot_user.secret'
+clientSecret = os.path.join(os.path.dirname(__file__), 'growbot_client.secret')
+userSecret = os.path.join(os.path.dirname(__file__), 'growbot_user.secret')
 username = confParser.get('growbot-conf', 'username')
 password = confParser.get('growbot-conf', 'password')
 user = Mastodon(
@@ -43,7 +45,7 @@ if args.All or args.atmosphere:
     outstr += '  '
     outstr += 'Humidity: '+thmod[1]+'\n\n'
 if args.All or args.soil:
-    smmod = readSoilMoisture()
+    smmod = soilmodule.readSoilMoisture()
     for i in range(len(smmod)-1):
         outstr += '['+i+'] '+smmod[i]+'\n'
 if args.All or args.camera:
