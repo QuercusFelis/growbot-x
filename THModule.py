@@ -27,6 +27,4 @@ def readTHModule():
         temp = temp * 9/5.0 + 32 #convert celcius to fahrenheit
         return(['{0:0.1f}'.format(temp),'{0:0.1f}%'.format(humidity)])
     else:
-        sys.stderr.write('growbot-x: Failed to obtain temperature & humidity reading\n')
-        exit(2)
-
+        raise Exception('Failed to obtain temperature & humidity reading')

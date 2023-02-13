@@ -40,14 +40,26 @@ user = Mastodon(
 # Format data and post it
 outstr = ''
 if args.All or args.atmosphere:
-    thmod = readTHModule()
-    outstr += 'Temp: '+thmod[0]+'f'
-    outstr += '  '
-    outstr += 'Humidity: '+thmod[1]+'\n\n'
+    try:
+        thmod = readTHModule()
+        outstr += 'Temp: '+thmod[0]+'f'
+        outstr += '  '
+        outstr += 'Humidity: '+thmod[1]
+    except Exception as e:
+        print(e)
+        outstr += e 
+        pass
+    finally:
+        outstr += '\n\n'
 if args.All or args.soil:
-    smmod = soilmodule.readSoilMoisture()
-    for i in range(len(smmod)-1):
-        outstr += '['+i+'] '+smmod[i]+'\n'
+    try:
+        smmod = soilmodule.readSoilMoisture()
+        for i in range(len(smmod)-1):
+            outstr += '['+i+'] '+smmod[i]
+    except:
+        pass
+    finally:
+        outstr += '\n'
 if args.All or args.camera:
     user.status_post(
         outstr, 
